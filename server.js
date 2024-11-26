@@ -22,13 +22,13 @@ const Produto = mongoose.model('Produto', new mongoose.Schema({
   nome: { type: String, required: true },
   descricao: { type: String, required: true },
   preco: { type: Number, required: true },
-  categoria: { type: String, required: true },
+  marca: { type: String, required: true },
 }));
 
 // Rota para adicionar um novo produto (POST)
 app.post('/produtos', async (req, res) => {
-  const { nome, descricao, preco, categoria } = req.body;
-  const produto = new Produto({ nome, descricao, preco, categoria });
+  const { nome, descricao, preco, marca } = req.body;
+  const produto = new Produto({ nome, descricao, preco, marca });
 
   try {
     await produto.save();
@@ -51,10 +51,10 @@ app.get('/produtos', async (req, res) => {
 // Rota para atualizar um produto (PUT)
 app.put('/produtos/:id', async (req, res) => {
   const { id } = req.params;
-  const { nome, descricao, preco, categoria } = req.body;
+  const { nome, descricao, preco, marca } = req.body;
 
   try {
-    const produto = await Produto.findByIdAndUpdate(id, { nome, descricao, preco, categoria }, { new: true });
+    const produto = await Produto.findByIdAndUpdate(id, { nome, descricao, preco, marca }, { new: true });
     if (!produto) {
       return res.status(404).json({ message: 'Produto não encontrado' });
     }
